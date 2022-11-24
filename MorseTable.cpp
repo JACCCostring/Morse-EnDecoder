@@ -1,7 +1,7 @@
 #include "MorseTable.hpp"
 
 Encode::MorseEncoder::MorseEncoder(){ initialEncode(); } //calling initialEncode at instantiation
-                                                         //to load data just once
+                                                                    //to load data just once
 bool Encode::MorseEncoder::validate(char character)
 {
     //note: when comparing, character it's turned to upper case
@@ -9,12 +9,25 @@ bool Encode::MorseEncoder::validate(char character)
     for(const auto &c: encoded) 
         if(c.first == toUpperCase(character)) return true;
 
-        return false;
+    return false;
+}
+
+bool Encode::MorseEncoder::validateMorse(std::string morse)
+{
+    for(const auto &c: decoded)
+         if(c.first == morse) return true;
+
+   return false;
 }
 
 const std::string Encode::MorseEncoder::getEncoded(char character)
 {   //turning character to upper case before returning the encoded
     return encoded[toUpperCase(character)];
+}
+
+char Encode::MorseEncoder::getDecoded(std::string letter)
+{   //turning character to upper case before returning the encoded
+    return decoded[letter];
 }
 
 void Encode::MorseEncoder::initialEncode()
@@ -44,10 +57,12 @@ void Encode::MorseEncoder::initialEncode()
         {
             for(char i = '0'; i < '9' + 1; i++){
                 encoded[i] = numericMorseCharacter[indexNumber];
+                decoded[ numericMorseCharacter[indexNumber] ] = i;
                 indexNumber++;
             }
         }
         encoded[character] = lettersMorseCharacter[indexAlph];
+        decoded[ lettersMorseCharacter[indexAlph] ] = character;
         indexAlph++;
     }
 }
@@ -58,4 +73,4 @@ char Encode::MorseEncoder::toUpperCase(char character)
     return static_cast<char>(upper);
 }
 
-Encode::MorseEncoder::~MorseEncoder(){ encoded.clear(); /*destructor*/}
+Encode::MorseEncoder::~MorseEncoder(){ encoded.clear(); decoded.clear(); /*destructor*/}
