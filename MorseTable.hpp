@@ -4,7 +4,7 @@ class is marked with Final specifier to avoid inheritance or extension, not need
 Not template usage here because the class is target for an especific case.
 
 g++ with C++17 were used to compile, std::map and std::toupper() as containers
-and latter conversion from low case to upper case function were used, all the psible 
+and latter conversion from lower to upper case function were used, all the psible
 constructors and operator are deleted to avoid object copy, since for now a object copy
 it's not need it.
 */
@@ -26,7 +26,9 @@ namespace Encode
                                             MorseEncoder(); //constructor
             
             bool                            validate(char); //to validate any character exist in container
+            bool                            validateMorse(std::string); //to validate if morse exist in container
             const                           std::string getEncoded(char); //to substract morse code
+            char                            getDecoded(std::string); //to substract decoded morse code
 
                                             ~MorseEncoder(); //destructor
 
@@ -36,23 +38,23 @@ namespace Encode
             private:
 
             void                            initialEncode();
-            char                            toUpperCase(char);
-
+            char                           toUpperCase(char);
 
         /*note: 
         copy, move, assign copy and move copy constuctors and operators
         not need it for now
         */
-            MorseEncoder(const MorseEncoder&) = delete;
-            MorseEncoder(const MorseEncoder&&) = delete;
-            MorseEncoder& operator = (const MorseEncoder&) = delete;
-            MorseEncoder& operator = (const MorseEncoder&&) = delete;
+            MorseEncoder(const MorseEncoder&) =                         delete;
+            MorseEncoder(const MorseEncoder&&) =                       delete;
+            MorseEncoder& operator = (const MorseEncoder&) =          delete;
+            MorseEncoder& operator = (const MorseEncoder&&) =        delete;
 
 //private members
 
             private:
 
             std::map<char, std::string>      encoded;
+            std::map<std::string, char>      decoded;
     };
 }
 
